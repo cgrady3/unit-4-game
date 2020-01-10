@@ -23,3 +23,19 @@ function fightersArray(){
         strength: Math.round(Math.random() * 5) + 15,
     },
 }
+
+// set character stats 
+function fighterValues (){
+    // a variable that call the fighters array function to act as a simple array 
+    let index = Object.keys(fightersArray);
+
+    for (let i = 0; i < index.length; i++){
+    // itterare through the index array 
+
+    // set variables to grab the character and index reference 
+
+    // make a div to hold thte info of the indexed fighter in the stage-one area
+    }
+}
+
+//
