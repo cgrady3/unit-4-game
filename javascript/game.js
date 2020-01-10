@@ -64,10 +64,10 @@ function fighterToken(index, fighter){
     let tokenDiv = $('<div class="token">');
 
     // create token elements to go into the div
-    let tokenImg = $('<img alt="head shot"');
-    let tokenHP = $('<div class="token-label">');
-    let tokenName = $('<div class="token-label">');
-    
+    let tokenImg = $('<img alt="head shot"').attr('src', // figure out how to call the image here);
+    let tokenHP = $('<div class="token-label">').text(fightersArray.health); //calling the array here isnt bringing up the text
+    let tokenName = $('<div class="token-label">').text(fightersArray.health);// figure out how to call the array info from here
+
     // append token elements to tokenDiv
     tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
 }

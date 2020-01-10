@@ -18,11 +18,13 @@ img{
     font-weight: bold;
 }
 
-
-.btn-danger{
-    font-weight: bold;
+.token{
+    height: 150px;
+    width: 150px;
+    background-color: antiquewhite;
 }
 
-.btn-warning{
-    font-weight: bold;
+.token-label{
+    font-size: 14px;
+    color: #313030;
 }
