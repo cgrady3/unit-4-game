@@ -1,0 +1,28 @@
+body{
+    font-family:'Share Tech Mono', monospace;
+    font-weight: bold;
+    color:#c0b5b5;
+    background: url(images/death-star.jpg);
+}
+
+img{
+    height: 100px;
+    width: 100px;
+}
+
+.btn-danger{
+    font-weight: bold;
+}
+
+.btn-warning{
+    font-weight: bold;
+}
+
+
+.btn-danger{
+    font-weight: bold;
+}
+
+.btn-warning{
+    font-weight: bold;
+}
