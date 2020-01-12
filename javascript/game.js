@@ -21,25 +21,30 @@ function fightersArray() {
             name: 'Qui-Gon Jinn',
             health: characterHealth(),
             strength: characterStrength(),
+            picture: '../css/images/Qui-Gon-Jinn.jpg'
         },
         'boba-fett': {
             name: 'Boba Fett',
             health: characterHealth(),
             strength: characterStrength(),
+            picture: '../css/images/boba-fett.jpg'
         },
         'darth-maul': {
             name: 'Darth Maul',
             health: characterHealth(),
             strength: characterStrength(),
+            picture: '../css/images/darth-maul.jpeg'
         },
         'darth-vader': {
             name: 'Darth Vader',
             health: characterHealth(),
             strength: characterStrength(),
+            picture: '../css/images/darth-vader.jpg'
         },
     }
 }
 console.log(fightersArray())
+console.log(fighterValues())
 
 // assign fighterArray references 
 function fighterValues() {
@@ -47,29 +52,31 @@ function fighterValues() {
     // a variable that call the fighters array function to act as a simple array 
     let index = Object.keys(fightersArray);
 
-    for (let i = 0; i < index.length; i++) {
-        // itterare through the index array 
-
+    for (let i = 0; i < index.length; i++) { 
         // set variables to grab the character and index reference 
-
+        let fighterIndex = index[i];
+        
         // pass the info of the indexed fighter to the fightersToken function
+        let referenceValues = fighterToken(fighterIndex)
     }
 }
 
 // create fighter tokens using jQuery's and append to stage-one's fighters div
 // chosen fighter and fighter index are passed in parameters
-function fighterToken(index, fighter) {
-
+function fighterToken(index) {
+console.log('did it')
     // class is given to the div since there are multiple tokens
     let tokenDiv = $('<div class="token">');
 
     // create token elements to go into the div
-    let tokenImg = $('<img alt="head shot"').attr('src', /*figure out how to call the image here*/);
-    let tokenHP = $('<div class="token-label">').text(fightersArray.health); //calling the array here isnt bringing up the text
-    let tokenName = $('<div class="token-label">').text(fightersArray.health);// figure out how to call the array info from here
+    let tokenImg = $('<img alt="head shot"').attr('src', fightersArray[index].picture);
+    let tokenHP = $('<div class="token-label">').text(fightersArray[index].health); //calling the array here isnt bringing up the text//need to specify which array index is being called
+    let tokenName = $('<div class="token-label">').text(fightersArray[index].health);// figure out how to call the array info from here
 
     // append token elements to tokenDiv
     tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
+    // append token to the fighters area
+    $('#allFighters').append(tokenDiv)
 }
 
 
