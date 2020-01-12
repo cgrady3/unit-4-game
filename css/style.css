@@ -7,7 +7,8 @@ body{
 
 img{
     height: 100px;
-    width: 100px;
+    width: 115px;
+    padding-left: 15px;
 }
 
 .btn-danger{
@@ -19,12 +20,16 @@ img{
 }
 
 .token{
-    height: 150px;
-    width: 150px;
+    height: 140px;
+    width: 130px;
     background-color: antiquewhite;
+    justify-content: flex-start;
+    display: inline-block;
+    margin: 5px;
 }
 
 .token-label{
     font-size: 14px;
     color: #313030;
+    padding-left: 15px;
 }
