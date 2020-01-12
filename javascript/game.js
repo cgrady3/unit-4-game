@@ -1,3 +1,6 @@
+//global variables
+var fighters = fightersArray();
+
 // Generate a random health between 150 and 200
 function characterHealth() {
 
@@ -21,63 +24,56 @@ function fightersArray() {
             name: 'Qui-Gon Jinn',
             health: characterHealth(),
             strength: characterStrength(),
-            picture: '../css/images/Qui-Gon-Jinn.jpg'
+            picture: './css/images/Qui-Gon-Jinn.jpg'
         },
         'boba-fett': {
             name: 'Boba Fett',
             health: characterHealth(),
             strength: characterStrength(),
-            picture: '../css/images/boba-fett.jpg'
+            picture: './css/images/boba-fett.jpg'
         },
         'darth-maul': {
             name: 'Darth Maul',
             health: characterHealth(),
             strength: characterStrength(),
-            picture: '../css/images/darth-maul.jpeg'
+            picture: './css/images/darth-maul.jpeg'
         },
         'darth-vader': {
             name: 'Darth Vader',
             health: characterHealth(),
             strength: characterStrength(),
-            picture: '../css/images/darth-vader.jpg'
+            picture: './css/images/darth-vader.jpg'
         },
     }
 }
 console.log(fightersArray())
-console.log(fighterValues())
+fighterValues()
 
 // assign fighterArray references 
 function fighterValues() {
 
     // a variable that call the fighters array function to act as a simple array 
-    let index = Object.keys(fightersArray);
+    var index = Object.keys(fighters);
 
-    for (let i = 0; i < index.length; i++) { 
+    for (var i = 0; i < index.length; i++) {
         // set variables to grab the character and index reference 
-        let fighterIndex = index[i];
-        
-        // pass the info of the indexed fighter to the fightersToken function
-        let referenceValues = fighterToken(fighterIndex)
+        var fighterIndex = index[i];
+        var fighter = fighters[fighterIndex]
+
+        // create token elements to go into the div
+        var tokenDiv = $('<div class="token">');
+        var tokenImg = $('<img alt="head shot">').attr('src', fighter.picture);
+        var tokenHP = $('<div class="token-label">').text(fighter.health);
+        var tokenName = $('<div class="token-label">').text(fighter.name);
+
+        // append token elements to tokenDiv
+        var token = tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
+
+        // append token to the fighters area
+        $('#allFighters').append(token)
     }
 }
 
-// create fighter tokens using jQuery's and append to stage-one's fighters div
-// chosen fighter and fighter index are passed in parameters
-function fighterToken(index) {
-console.log('did it')
-    // class is given to the div since there are multiple tokens
-    let tokenDiv = $('<div class="token">');
-
-    // create token elements to go into the div
-    let tokenImg = $('<img alt="head shot"').attr('src', fightersArray[index].picture);
-    let tokenHP = $('<div class="token-label">').text(fightersArray[index].health); //calling the array here isnt bringing up the text//need to specify which array index is being called
-    let tokenName = $('<div class="token-label">').text(fightersArray[index].health);// figure out how to call the array info from here
-
-    // append token elements to tokenDiv
-    tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
-    // append token to the fighters area
-    $('#allFighters').append(tokenDiv)
-}
 
 
 
@@ -86,12 +82,12 @@ console.log('did it')
 
 
 // start game after page loads
-$(document).ready(function(){
+$(document).ready(function () {
 
     //click event to select fighter
     //of all the fighters, clicking on a fighter's token selects the fighter
-    $('#allFighters').click('.token', function(){
-        let fighter = $(this);
+    $('#allFighters').click('.token', function () {
+        var fighter = $(this);
 
         // move the the fighter seleceted by the click event to the userFighter ID div
         $('#userFighter').append(this);
