@@ -70,10 +70,10 @@ fighterValues()
 function createToken(fighter, index) {
 
     // create token elements to go into the div
-    var tokenDiv = $('<div class="token" data-index = '`${index}`'>');
+    var tokenDiv = $('<div class="token" data-index = "' + index + '">');
     var tokenImg = $('<img alt="head shot">').attr('src', fighter.picture);
-    var tokenHP = $('<div class="token-label">').text(fighter.health);
-    var tokenName = $('<div class="token-label">').text(fighter.name);
+    var tokenHP = $('<div class="token-label HP">').text(fighter.health);
+    var tokenName = $('<div class="token-label name">').text(fighter.name);
 
     // append token elements to tokenDiv
     let token = tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
@@ -145,7 +145,7 @@ function selectOpponent() {
     $('.opponentChoices').click(function () {
 
         //update to game state which enemy has been selected
-        let opponent = $(this).attr('data-index'); // figure out how to identify selected player here
+        let opponent = $(this).attr('data-index');
         initGame.opponent = fighters[opponent];
 
         // move chosen opponent to oppenet div
@@ -159,6 +159,11 @@ function attack() {
     // fighter and opponent take damage equal to the other's strength
     initGame.userFighter.health -= initGame.opponent.strength
     initGame.opponent.health -= initGame.userFighter.strength
+
+    // update characters health on their token
+    $('#userFighter .HP').text(initGame.userFighter.health)
+    $('#opposingFighter .HP').text(initGame.opponent.health)
+
 }
 
 // strong attack function
@@ -169,6 +174,11 @@ function strongAttack() {
 
         // opponent takes damage equal to 1.1 - 2.1x the user fighters strength
         initGame.opponent.health -= initGame.userFighter.strength * (Math.random + 1.1)
+
+        // update characters health on their token
+        $('#userFighter .HP').text(initGame.userFighter.health)
+        $('#opposingFighter .HP').text(initGame.opponent.health)
+
     }
 
     // increase the number of strong attacks used
@@ -191,20 +201,26 @@ function strongAttack() {
 $(document).ready(function () {
 
     //click event to select fighter
-    //of all the fighters, clicking on a fighter's token selects the fighter
     $('#allFighters').click('.token', function () {
-        var userFighter = $(this);
-        console.log(userFighter);
+
+        // get the chosen fighters index number
+        var userFighter = $(this).attr('data-index');
+
+        // update the initial game states chosen fighter
+        initGame.userFighter = fighters[userFighter];
 
         // move the the fighter seleceted by the click event to the userFighter ID div
         $('#userFighter').append(this);
 
-        // move unselected fighters to stage-two div
-        stageTwoFighters(this);
-
-        // remove tokens from
+        // determine who the opponents are and move then to the stage two div area
+        stageTwoFighters(userFighter);
     })
 
+    // click event to select opponent
+
+
+
+    
     // click events for the attack buttons
     $('.attack').click(attack());
     $('.strong-attack').click(strongAttack())
@@ -214,13 +230,10 @@ $(document).ready(function () {
         $('#userFighter').empty();
         $('#opponentChoices').empty();
         $('#opposingFighter').empty();
-        fighterValues();
+        play();
     })
 
-
-
-
-
+    // function call to start the game
     play();
 })
 
