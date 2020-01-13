@@ -125,7 +125,12 @@ function stageTwoFighters(userFighter) {
     }
 }
 
+// move selected opponent to opponent section
+// this function should run every time a stage two fighter is clicked
+// until choosable opponents are null
 
+
+//
 
 
 
@@ -157,7 +162,12 @@ $(document).ready(function () {
     // click event for the strong attack button
 
     // click event for reset button
-
+    $('.reset').click(function(){
+        $('#userFighter').empty();
+        $('#opponentChoices').empty();
+        $('#opposingFighter').empty();
+        fighterValues();
+    })
 
 
 
