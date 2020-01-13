@@ -1,5 +1,9 @@
 //global variables
+// make a function a variable so it can be affected by
 var fighters = fightersArray();
+// a variable that call the fighters array function to act as a simple array 
+var index = Object.keys(fighters);
+console.log(index)
 
 // Generate a random health between 150 and 200
 function characterHealth() {
@@ -49,13 +53,11 @@ function fightersArray() {
 console.log(fightersArray())
 fighterValues()
 
-// assign fighterArray references 
+// assign fighters their object array index and creat token 
 function fighterValues() {
 
-    // a variable that call the fighters array function to act as a simple array 
-    var index = Object.keys(fighters);
-
     for (var i = 0; i < index.length; i++) {
+
         // set variables to grab the character and index reference 
         var fighterIndex = index[i];
         var fighter = fighters[fighterIndex]
@@ -74,6 +76,21 @@ function fighterValues() {
     }
 }
 
+// fighters not selected by user move to stage two area
+function stageTwoFighters(userFighter) {
+    for (var i = 0; i < index.length; i++) {
+        if (index[i] !== userFighter) { //figure out how to assign the fighter index to userFighter
+            // set variables to grab the character and index reference 
+            var opponentIndex = index[i];
+            var opponent = fighters[opponentIndex]
+
+            // append token to the opponent choices area
+            $('#opponentChoices').append(token)
+        }
+    }
+}
+
+
 
 
 
@@ -87,12 +104,13 @@ $(document).ready(function () {
     //click event to select fighter
     //of all the fighters, clicking on a fighter's token selects the fighter
     $('#allFighters').click('.token', function () {
-        var fighter = $(this);
+        var userFighter = $(this);
 
         // move the the fighter seleceted by the click event to the userFighter ID div
         $('#userFighter').append(this);
 
         // move unselected fighters to stage-two div
+        stageTwoFighters(this);
     })
 
     // click event for the attack button
