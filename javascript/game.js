@@ -1,4 +1,4 @@
-//global variables
+// global variables
 // make a function a variable so it can be run by loops
 var fighters = fightersArray();
 var beginGame = initGame();
@@ -64,6 +64,7 @@ function fightersArray() {
         },
     }
 }
+
 console.log(fightersArray())
 fighterValues()
 
@@ -129,7 +130,7 @@ function stageTwoFighters(userFighter) {
             var opponentIndex = index[i];
             var opponent = fighters[opponentIndex]
 
-            //call createnToken function for the i-th character
+            // call createnToken function for the i-th character
             let token = createToken(opponent, opponentIndex);
 
             // append token to the opponent choices area
@@ -139,22 +140,22 @@ function stageTwoFighters(userFighter) {
 }
 
 // move selected opponent to opponent section
-// this function should run every time a stage two fighter is clicked
-// until choosable opponents are null
 function selectOpponent() {
     $('.opponentChoices').click(function () {
 
-        //update to game state which enemy has been selected
+        // assign the opponent their array index number
         let opponent = $(this).attr('data-index');
+
+        // update to game state which enemy has been selected
         initGame.opponent = fighters[opponent];
 
         // move chosen opponent to oppenet div
-        $('.opposingFighter').append(this);
+        $('#opposingFighter').append(this);
     })
 }
 
 // attack function
-function attack() {
+function attackBtn() {
 
     // fighter and opponent take damage equal to the other's strength
     initGame.userFighter.health -= initGame.opponent.strength
@@ -167,7 +168,7 @@ function attack() {
 }
 
 // strong attack function
-function strongAttack() {
+function strongAttackBtn() {
 
     // allow another strong attack use if 3 or less have already been used
     if (strongAttacks <= 3) {
@@ -186,10 +187,32 @@ function strongAttack() {
 }
 
 // boolean return functions to check game play status's
+// functions will return either true or false boolean
 
+function isWinner() {
 
+    if (initGame.opponentsRemaining === 0)
+        return true;
+    else
+        return false;
+}
 
+function isLoser(){
+    if (initGame.health <= 0)
+        return true;
+    else
+        return false;
+}
 
+function fighting(){
+
+    // check if game has been won
+    if (isWinner()) === true)
+
+    // check if game has been lost
+    if (isLoser() === true)
+
+}
 
 
 
@@ -220,10 +243,10 @@ $(document).ready(function () {
 
 
 
-    
+
     // click events for the attack buttons
-    $('.attack').click(attack());
-    $('.strong-attack').click(strongAttack())
+    $('.attack').click(attackBtn());
+    $('.strong-attack').click(strongAttackBtn())
 
     // click event for reset button
     $('.reset').click(function () {
