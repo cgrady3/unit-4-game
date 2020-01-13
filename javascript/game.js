@@ -1,6 +1,7 @@
 //global variables
-// make a function a variable so it can be affected by
+// make a function a variable so it can be run by loops
 var fighters = fightersArray();
+
 // a variable that call the fighters array function to act as a simple array 
 var index = Object.keys(fighters);
 console.log(index)
@@ -53,6 +54,19 @@ function fightersArray() {
 console.log(fightersArray())
 fighterValues()
 
+function createToken(fighter) {
+    // create token elements to go into the div
+    var tokenDiv = $('<div class="token">');
+    var tokenImg = $('<img alt="head shot">').attr('src', fighter.picture);
+    var tokenHP = $('<div class="token-label">').text(fighter.health);
+    var tokenName = $('<div class="token-label">').text(fighter.name);
+
+    // append token elements to tokenDiv
+    let token = tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
+    
+    return token;
+}
+
 // assign fighters their object array index and creat token 
 function fighterValues() {
 
@@ -62,17 +76,10 @@ function fighterValues() {
         var fighterIndex = index[i];
         var fighter = fighters[fighterIndex]
 
-        // create token elements to go into the div
-        var tokenDiv = $('<div class="token">');
-        var tokenImg = $('<img alt="head shot">').attr('src', fighter.picture);
-        var tokenHP = $('<div class="token-label">').text(fighter.health);
-        var tokenName = $('<div class="token-label">').text(fighter.name);
-
-        // append token elements to tokenDiv
-        var token = tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
+        let token = createToken(fighter);
 
         // append token to the fighters area
-        $('#allFighters').append(token)
+        $('#allFighters').append(token);
     }
 }
 
@@ -84,8 +91,10 @@ function stageTwoFighters(userFighter) {
             var opponentIndex = index[i];
             var opponent = fighters[opponentIndex]
 
+            let token = createToken(opponent);
+
             // append token to the opponent choices area
-            $('#opponentChoices').append(token)
+            $('#opponentChoices').append(token);
         }
     }
 }
