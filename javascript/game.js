@@ -55,6 +55,7 @@ console.log(fightersArray())
 fighterValues()
 
 function createToken(fighter) {
+
     // create token elements to go into the div
     var tokenDiv = $('<div class="token">');
     var tokenImg = $('<img alt="head shot">').attr('src', fighter.picture);
@@ -63,7 +64,7 @@ function createToken(fighter) {
 
     // append token elements to tokenDiv
     let token = tokenDiv.append(tokenName).append(tokenImg).append(tokenHP);
-    
+
     return token;
 }
 
@@ -76,6 +77,7 @@ function fighterValues() {
         var fighterIndex = index[i];
         var fighter = fighters[fighterIndex]
 
+        //call createnToken function for the i-th character
         let token = createToken(fighter);
 
         // append token to the fighters area
@@ -83,14 +85,38 @@ function fighterValues() {
     }
 }
 
+// move user fighter to user fighter section
+function selectedFighter(userFighter) {
+
+    for (var i = 0; i < index.length; i++) {
+
+        if (index[i] === userFighter) {
+
+            // set variables to grab the character and index reference 
+            var seclectedFighterIndex = index[i];
+            var userFighter = fighters[fighterIndex]
+
+            //call createnToken function for the i-th character
+            let token = createToken(fighter);
+
+            // append token to the fighters area
+            $('#userFighters').append(token);
+        }
+    }
+}
+
 // fighters not selected by user move to stage two area
 function stageTwoFighters(userFighter) {
+
     for (var i = 0; i < index.length; i++) {
+
         if (index[i] !== userFighter) { //figure out how to assign the fighter index to userFighter
+
             // set variables to grab the character and index reference 
             var opponentIndex = index[i];
             var opponent = fighters[opponentIndex]
 
+            //call createnToken function for the i-th character
             let token = createToken(opponent);
 
             // append token to the opponent choices area
@@ -98,6 +124,10 @@ function stageTwoFighters(userFighter) {
         }
     }
 }
+
+
+
+
 
 
 
