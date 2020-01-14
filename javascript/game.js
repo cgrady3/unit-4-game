@@ -239,10 +239,12 @@ $(document).ready(function () {
         // check if user or opponent is alive and can attack
         // if they aren't remove their option to attack
         if (beginGame.userFighter.health - beginGame.opponent.strength <= 0 || beginGame.opponent.health - beginGame.userFighter.strength<= 0) {
+
             $('#attack').hide()
             $('#strong-attack').hide()
         }
         else {
+
             // fighter and opponent take damage equal to the other's strength
             beginGame.userFighter.health -= beginGame.opponent.strength;
             beginGame.opponent.health -= beginGame.userFighter.strength;
@@ -255,7 +257,8 @@ $(document).ready(function () {
 
     $('#strong-attack').click(function () {
 
-        if (beginGame.userFighter.health <= 0 || beginGame.opponent.health <= 0) {
+        if (beginGame.userFighter.health - beginGame.opponent.strength <= 0 || beginGame.opponent.health - beginGame.userFighter.strength<= 0) {
+
             $('#strong-attack').hide()
             $('#attack').hide()
         }
@@ -283,10 +286,7 @@ $(document).ready(function () {
 
     // click event for reset button
     $('#reset').click(function () {
-        $('#userFighter').empty();
-        $('#opponentChoices').empty();
-        $('#opposingFighter').empty();
-        play();
+        location.reload();
     })
 
     // function call to start the game
