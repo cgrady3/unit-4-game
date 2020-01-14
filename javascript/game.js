@@ -1,4 +1,3 @@
-// global variables
 // make a function a variable so it can be run by loops
 var fighters = fightersArray();
 var beginGame = initGame();
@@ -7,6 +6,15 @@ var beginGame = initGame();
 var index = Object.keys(fighters);
 console.log(index)
 
+// create play function
+function play() {
+
+    // set game to starting parameters
+    fightersArray();
+    initGame();
+
+}
+
 // create function to initialize the game state 
 function initGame() {
 
@@ -14,7 +22,7 @@ function initGame() {
         userFighter: null,
         opponent: null,
         opponentsRemaining: fighters.length - 1,
-        strongAttacks: null,
+        strongAttacks: 0,
     }
 
 }
@@ -65,10 +73,7 @@ function fightersArray() {
     }
 }
 
-console.log(fightersArray())
-fighterValues()
-
-function createToken(fighter, index) {
+function createToken(fighter, index, type) {
 
     // create token elements to go into the div
     var tokenDiv = $('<div class="token" data-index = "' + index + '">');
@@ -99,6 +104,8 @@ function fighterValues() {
     }
 }
 
+console.log(fightersArray())
+
 // move user fighter to user fighter section
 function selectedFighter(userFighter) {
 
@@ -107,16 +114,21 @@ function selectedFighter(userFighter) {
         if (index[i] === userFighter) {
 
             // set variables to grab the character and index reference 
-            var seclectedFighterIndex = index[i];
-            var userFighter = fighters[fighterIndex]
+            var selectedFighterIndex = index[i];
+            let selectedUserFighter = fighters[selectedFighterIndex];
 
             //call createnToken function for the i-th character
-            let token = createToken(userfighter, seclectedFighterIndex);
+            let token = createToken(selectedUserFighter, selectedFighterIndex);
+
+            console.log('token: ', token)
 
             // append token to the fighters area
             $('#userFighters').append(token);
+            console.log('index[i]', index[i])
         }
     }
+
+    $('#allFighters').empty()
 }
 
 // fighters not selected by user move to stage two area
@@ -133,6 +145,8 @@ function stageTwoFighters(userFighter) {
             // call createnToken function for the i-th character
             let token = createToken(opponent, opponentIndex);
 
+            token.addClass('opponentToken')
+
             // append token to the opponent choices area
             $('#opponentChoices').append(token);
         }
@@ -141,93 +155,70 @@ function stageTwoFighters(userFighter) {
 
 // move selected opponent to opponent section
 function selectOpponent() {
-    $('.opponentChoices').click(function () {
-
+    $('.opponentToken').click(function () {
+        console.log(this)
         // assign the opponent their array index number
         let opponent = $(this).attr('data-index');
 
         // update to game state which enemy has been selected
-        initGame.opponent = fighters[opponent];
+        beginGame.opponent = fighters[opponent];
 
         // move chosen opponent to oppenet div
         $('#opposingFighter').append(this);
+
+        $('#opponentChoices').hide();
+
+        $('#actionButtons').show();
     })
 }
 
-// attack function
-function attackBtn() {
 
-    // fighter and opponent take damage equal to the other's strength
-    initGame.userFighter.health -= initGame.opponent.strength
-    initGame.opponent.health -= initGame.userFighter.strength
-
-    // update characters health on their token
-    $('#userFighter .HP').text(initGame.userFighter.health)
-    $('#opposingFighter .HP').text(initGame.opponent.health)
-
-}
-
-// strong attack function
-function strongAttackBtn() {
-
-    // allow another strong attack use if 3 or less have already been used
-    if (strongAttacks <= 3) {
-
-        // opponent takes damage equal to 1.1 - 2.1x the user fighters strength
-        initGame.opponent.health -= initGame.userFighter.strength * (Math.random + 1.1)
-
-        // update characters health on their token
-        $('#userFighter .HP').text(initGame.userFighter.health)
-        $('#opposingFighter .HP').text(initGame.opponent.health)
-
-    }
-
-    // increase the number of strong attacks used
-    strongAttacks++;
-}
-
-// boolean return functions to check game play status's
+/*// boolean return functions to check game play status's
 // functions will return either true or false boolean
 
 function isWinner() {
 
-    if (initGame.opponentsRemaining === 0)
+    if (beginGame.opponentsRemaining === 0)
         return true;
     else
         return false;
 }
 
-function isLoser(){
-    if (initGame.health <= 0)
+function isLoser(fighter, opponet) {
+    if (fighter.health <= 0 && opponet.health >= 0)
         return true;
     else
         return false;
 }
 
-function fighting(){
+function fighting() {
 
     // check if game has been won
-    if (isWinner()) === true)
+    if (isWinner())
+        $('#gameComments').text('You are the Champion!');
 
     // check if game has been lost
-    if (isLoser() === true)
+    else if (isLoser(beginGame.userFighter.health, beginGame.opponent.health))
+        $('#gameComments').text('You have Failed!');
 
-}
-
-
-
-
-
-
+}*/
 
 // start game after page loads
 $(document).ready(function () {
 
+    fighterValues()
+
     //click event to select fighter
-    $('#allFighters').click('.token', function () {
+    $('.token').click(function () {
 
         // get the chosen fighters index number
-        var userFighter = $(this).attr('data-index');
+        let userFighter = $(this).attr('data-index');
+
+        // update to game state which enemy has been selected
+        beginGame.userFighter = fighters[userFighter];
+
+        // move the selected fighter to the selected fighters section
+        selectedFighter(userFighter);
 
         // update the initial game states chosen fighter
         initGame.userFighter = fighters[userFighter];
@@ -237,19 +228,61 @@ $(document).ready(function () {
 
         // determine who the opponents are and move then to the stage two div area
         stageTwoFighters(userFighter);
+
+        // enable selection of opponent fighter
+        selectOpponent();
     })
 
-    // click event to select opponent
-
-
-
-
     // click events for the attack buttons
-    $('.attack').click(attackBtn());
-    $('.strong-attack').click(strongAttackBtn())
+    $('#attack').click(function () {
+
+        // check if user or opponent is alive and can attack
+        // if they aren't remove their option to attack
+        if (beginGame.userFighter.health - beginGame.opponent.strength <= 0 || beginGame.opponent.health - beginGame.userFighter.strength<= 0) {
+            $('#attack').hide()
+            $('#strong-attack').hide()
+        }
+        else {
+            // fighter and opponent take damage equal to the other's strength
+            beginGame.userFighter.health -= beginGame.opponent.strength;
+            beginGame.opponent.health -= beginGame.userFighter.strength;
+
+            // update characters health on their token
+            $('#userFighter .HP').text(beginGame.userFighter.health);
+            $('#opposingFighter .HP').text(beginGame.opponent.health);
+        }
+    });
+
+    $('#strong-attack').click(function () {
+
+        if (beginGame.userFighter.health <= 0 || beginGame.opponent.health <= 0) {
+            $('#strong-attack').hide()
+            $('#attack').hide()
+        }
+        // allow another strong attack use if 3 or less have already been used
+        else if (beginGame.strongAttacks <= 2) {
+
+            // fighter take damage equal to the other's strength
+            beginGame.userFighter.health -= beginGame.opponent.strength;
+
+            // opponent takes damage equal to 1.1 - 2.1x the user fighters strength
+            beginGame.opponent.health -= Math.round(beginGame.userFighter.strength * (Math.random() + 1.1));
+
+            // update characters health on their token
+            $('#userFighter .HP').text(beginGame.userFighter.health);
+            $('#opposingFighter .HP').text(beginGame.opponent.health);
+        }
+
+        if (beginGame.strongAttacks === 2) {
+            $('#strong-attack').hide();
+        }
+
+        // increase the number of strong attacks used
+        beginGame.strongAttacks++;
+    })
 
     // click event for reset button
-    $('.reset').click(function () {
+    $('#reset').click(function () {
         $('#userFighter').empty();
         $('#opponentChoices').empty();
         $('#opposingFighter').empty();
