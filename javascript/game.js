@@ -4,7 +4,6 @@ var beginGame = initGame();
 
 // a variable that call the fighters array function to act as a simple array 
 var index = Object.keys(fighters);
-console.log(index)
 
 // create play function
 function play() {
@@ -12,7 +11,6 @@ function play() {
     // set game to starting parameters
     fightersArray();
     initGame();
-
 }
 
 // create function to initialize the game state 
@@ -24,7 +22,6 @@ function initGame() {
         opponentsRemaining: fighters.length - 1,
         strongAttacks: 0,
     }
-
 }
 
 // Generate a random health between 150 and 200
@@ -94,7 +91,7 @@ function fighterValues() {
 
         // set variables to grab the character and index reference 
         var fighterIndex = index[i];
-        var fighter = fighters[fighterIndex]
+        var fighter = fighters[fighterIndex];
 
         //call createnToken function for the i-th character
         let token = createToken(fighter, fighterIndex);
@@ -120,15 +117,15 @@ function selectedFighter(userFighter) {
             //call createnToken function for the i-th character
             let token = createToken(selectedUserFighter, selectedFighterIndex);
 
-            console.log('token: ', token)
-
             // append token to the fighters area
             $('#userFighters').append(token);
-            console.log('index[i]', index[i])
         }
     }
 
     $('#allFighters').empty()
+
+    $('#stageTwo').show();
+
 }
 
 // fighters not selected by user move to stage two area
@@ -140,12 +137,12 @@ function stageTwoFighters(userFighter) {
 
             // set variables to grab the character and index reference 
             var opponentIndex = index[i];
-            var opponent = fighters[opponentIndex]
+            var opponent = fighters[opponentIndex];
 
             // call createnToken function for the i-th character
             let token = createToken(opponent, opponentIndex);
 
-            token.addClass('opponentToken')
+            token.addClass('opponentToken');
 
             // append token to the opponent choices area
             $('#opponentChoices').append(token);
@@ -166,25 +163,34 @@ function selectOpponent() {
         // move chosen opponent to oppenet div
         $('#opposingFighter').append(this);
 
+        $('#opponent').show();
+
         $('#stageTwo').hide();
 
         $('#actionButtons').show();
 
         $('#reset').show();
 
+        setTimeout(function () {
+            alert('You May Only Use Your Strong Attacks 3 Times, Choose Wisely')
+        }, 10);
     })
 }
 
 // start game after page loads
 $(document).ready(function () {
 
-    fighterValues()
+    fighterValues();
+
+    $('#fighter').hide();
+
+    $('#stageTwo').hide();
+
+    $('#opponent').hide();
 
     $('#actionButtons').hide();
 
     $('#reset').hide();
-
-    $('#fighter').hide();
 
     //click event to select fighter
     $('.token').click(function () {
@@ -235,19 +241,19 @@ $(document).ready(function () {
             // determine who is the winner
             if (relativeUserHealth >= 0 && relativeOpponentHealth <= 0) {
                 setTimeout(function () {
-                    alert(`${userName} Has Defeated ${opponentName}!`);
-                }, 10)
+                    alert(`${userName} Has Defeated ${opponentName}!`)
+                }, 10);
 
             }
             else if (relativeUserHealth <= 0 && relativeOpponentHealth >= 0) {
                 setTimeout(function () {
-                    alert(`${opponentName} Has Defeated ${userName}!`);
-                }, 10)
+                    alert(`${opponentName} Has Defeated ${userName}!`)
+                }, 10);
             }
             else {
                 setTimeout(function () {
-                    alert('Both Fighters Have Fallen');
-                }, 10)
+                    alert('Both Fighters Have Fallen')
+                }, 10);
             }
         }
         // if no one has won or lost yet
@@ -279,17 +285,19 @@ $(document).ready(function () {
             // determine who is the winner
             if (relativeUserHealth >= 0 && relativeOpponentHealth <= 0) {
                 setTimeout(function () {
-                    alert(`${userName} Has Defeated ${opponentName}!`);
-                }, 10)
+                    alert(`${userName} Has Defeated ${opponentName}!`)
+                }, 10);
 
             }
             else if (relativeUserHealth <= 0 && relativeOpponentHealth >= 0) {
                 setTimeout(function () {
-                    alert(`${opponentName} Has Defeated ${userName}!`);
-                }, 10)
+                    alert(`${opponentName} Has Defeated ${userName}!`)
+                }, 10);
             }
             else {
-                alert('Both Fighters Have Fallen');
+                setTimeout(function () {
+                    alert('Both Fighters Have Fallen')
+                }, 10);
             }
         }
         // allow another strong attack use if 3 or less have already been used

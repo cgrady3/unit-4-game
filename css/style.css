@@ -1,38 +1,45 @@
-body{
-    font-family:'Share Tech Mono', monospace;
+body {
+    font-family: 'Share Tech Mono', monospace;
     font-weight: bold;
-    color:#c0b5b5;
+    color: #c0b5b5;
     background: url(images/death-star.jpg);
 }
 
-#title{
-
+#title {
+    margin-left: 38%;
+    margin-bottom: 5%;
 }
 
-#main{
-   
+h1{
+    font-size: 60px;
+    margin-left: -7%;
 }
 
-#game-comments{
-
+#main {
+    margin-left: 20%;
 }
 
-img{
+#game-comments {
+    color: #751515;
+	font-size: 40px;
+}
+
+img {
     height: 100px;
     width: 115px;
     padding-left: 15px;
 }
 
-.btn-danger{
+.btn-danger {
     font-weight: bold;
     margin: 10px;
 }
 
-.btn-warning{
+.btn-warning {
     font-weight: bold;
 }
 
-.token{
+.token {
     height: 140px;
     width: 130px;
     background-color: antiquewhite;
@@ -41,12 +48,12 @@ img{
     margin: 20px;
 }
 
-.token-label{
+.token-label {
     font-size: 14px;
     color: #313030;
     padding-left: 15px;
 }
 
-.label{
+.label {
     margin: 0;
 }
