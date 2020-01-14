@@ -163,12 +163,15 @@ function selectOpponent() {
         // update to game state which enemy has been selected
         beginGame.opponent = fighters[opponent];
 
-        // move chosen opponent to opponent div
+        // move chosen opponent to oppenet div
         $('#opposingFighter').append(this);
 
-        $('#opponentChoices').hide();
+        $('#stageTwo').hide();
 
         $('#actionButtons').show();
+
+        $('#reset').show();
+
     })
 }
 
@@ -176,6 +179,12 @@ function selectOpponent() {
 $(document).ready(function () {
 
     fighterValues()
+
+    $('#actionButtons').hide();
+
+    $('#reset').hide();
+
+    $('#fighter').hide();
 
     //click event to select fighter
     $('.token').click(function () {
@@ -200,15 +209,16 @@ $(document).ready(function () {
 
         // enable selection of opponent fighter
         selectOpponent();
+
+        $('#fighter').show();
+
+        $('#stageOne').hide();
+
     })
 
     // click events for the attack buttons
     $('#attack').click(function () {
 
-        let userHealth = beginGame.userFighter.health;
-        let opponentHealth = beginGame.opponent.health;
-        let userStrength = beginGame.userFighter.strength;
-        let opponentStrength = beginGame.opponent.strength;
         let relativeUserHealth = beginGame.userFighter.health - beginGame.opponent.strength;
         let relativeOpponentHealth = beginGame.opponent.health - beginGame.userFighter.strength;
         let userName = beginGame.userFighter.name;
@@ -217,48 +227,69 @@ $(document).ready(function () {
         // check if user or opponent is alive and can attack
         // if they aren't remove their option to attack
         if (relativeUserHealth <= 0 || relativeOpponentHealth <= 0) {
+
+            $('.HP').hide();
             $('#attack').hide();
             $('#strong-attack').hide();
 
             // determine who is the winner
             if (relativeUserHealth >= 0 && relativeOpponentHealth <= 0) {
-                alert(`${userName} Has Defeated ${opponentName}!`);
+                setTimeout(function () {
+                    alert(`${userName} Has Defeated ${opponentName}!`);
+                }, 10)
+
             }
             else if (relativeUserHealth <= 0 && relativeOpponentHealth >= 0) {
-                alert(`${opponentName} Has Defeated ${userName}!`);
+                setTimeout(function () {
+                    alert(`${opponentName} Has Defeated ${userName}!`);
+                }, 10)
             }
             else {
-                alert('Both Fighters Have Fallen');
+                setTimeout(function () {
+                    alert('Both Fighters Have Fallen');
+                }, 10)
             }
         }
+        // if no one has won or lost yet
         else {
 
             // fighter and opponent take damage equal to the other's strength
-            userHealth -= opponentStrength;
-            opponentHealth -= userStrength;
+            beginGame.userFighter.health -= beginGame.opponent.strength;
+            beginGame.opponent.health -= beginGame.userFighter.strength;
 
             // update characters health on their token
-            $('#userFighter .HP').text(userHealth);
-            $('#opposingFighter .HP').text(opponentHealth);
+            $('#userFighter .HP').text(beginGame.userFighter.health);
+            $('#opposingFighter .HP').text(beginGame.opponent.health);
         }
     });
 
     $('#strong-attack').click(function () {
 
+        let relativeUserHealth = beginGame.userFighter.health - beginGame.opponent.strength;
+        let relativeOpponentHealth = beginGame.opponent.health - beginGame.userFighter.strength;
+        let userName = beginGame.userFighter.name;
+        let opponentName = beginGame.opponent.name;
+
         if (beginGame.userFighter.health - beginGame.opponent.strength <= 0 || beginGame.opponent.health - beginGame.userFighter.strength <= 0) {
 
+            $('.HP').hide();
             $('#strong-attack').hide();
             $('#attack').hide();
 
             // determine who is the winner
-            if (beginGame.userFighter.health - beginGame.opponent.strength >= 0 && beginGame.opponent.health - beginGame.userFighter.strength <= 0) {
-                alert(`You have defeated ${beginGame.opponent.name}!`);
+            if (relativeUserHealth >= 0 && relativeOpponentHealth <= 0) {
+                setTimeout(function () {
+                    alert(`${userName} Has Defeated ${opponentName}!`);
+                }, 10)
+
             }
-            else if (beginGame.userFighter.health - beginGame.opponent.strength <= 0 && beginGame.opponent.health - beginGame.userFighter.strength >= 0) {
-                alert(`${beginGame.opponent.name} has defeated you!`);
+            else if (relativeUserHealth <= 0 && relativeOpponentHealth >= 0) {
+                setTimeout(function () {
+                    alert(`${opponentName} Has Defeated ${userName}!`);
+                }, 10)
             }
             else {
-                alert('Both opponents have fallen')
+                alert('Both Fighters Have Fallen');
             }
         }
         // allow another strong attack use if 3 or less have already been used

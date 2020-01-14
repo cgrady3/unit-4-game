@@ -25,6 +25,7 @@ img{
 
 .btn-danger{
     font-weight: bold;
+    margin: 10px;
 }
 
 .btn-warning{
@@ -37,11 +38,15 @@ img{
     background-color: antiquewhite;
     justify-content: flex-start;
     display: inline-block;
-    margin: 5px;
+    margin: 20px;
 }
 
 .token-label{
     font-size: 14px;
     color: #313030;
     padding-left: 15px;
+}
+
+.label{
+    margin: 0;
 }
